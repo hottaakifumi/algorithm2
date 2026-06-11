@@ -117,7 +117,7 @@ void Shell(int size) {
 void Disp(int size) {
     int i;
     for (i = 0; i < size; i++)
-        printf("%.1f\t%s\n", table[i].score, table[i].name); // ★変更: %d から %.1f へ（小数点以下2桁表示）
+        printf("%.1f\t%s\n", table[i].score, table[i].name); 
 }
 
 int main(int argc, char *argv[]) {
@@ -146,12 +146,12 @@ int main(int argc, char *argv[]) {
     fseek(fp, 0L, SEEK_SET);
     n = 0;
     while (fgets(buf, BUF_SIZE, fp) != NULL) {
-        sscanf(buf, "%lf\t%s", &table[n].score, table[n].name); // ★変更: %d から %lf へ
+        sscanf(buf, "%lf\t%s", &table[n].score, table[n].name); 
         n++;
     }
     fclose(fp);
 
-//    Disp(n);
+//  Disp(n);
     Clear();
 
     // メイン処理では現在シェルソート（Shell）が呼ばれています
