@@ -13,24 +13,20 @@ struct student {
 struct student *table;
 int counter_compare, counter_swap;
 
-/* カウンタを0にリセット */
 void Clear() {
     counter_compare = 0;
     counter_swap = 0;
 }
 
-/* 現在のカウンタ値を表示 */
 void Counter() {
     printf("Compare %d Swap %d\n", counter_compare, counter_swap);
 }
 
-/* 比較関数：呼び出されるたびに比較回数をインクリメント */
 int my_compare(const struct student *a, const struct student *b) {
     counter_compare++;
     return (a->score > b->score) ? 1 : (a->score < b->score) ? -1 : 0;
 }
 
-/* 入れ替え関数：呼び出されるたびに交換回数をインクリメント */
 void my_swap(struct student *a, struct student *b) {
     struct student c;
     counter_swap++;
@@ -152,7 +148,6 @@ int main(int argc, char *argv[]) {
 //  Disp(n);
     Clear();
 
-    // メイン処理では現在シェルソート（Shell）が呼ばれています
     Shell(n);
 
     Disp(n);
