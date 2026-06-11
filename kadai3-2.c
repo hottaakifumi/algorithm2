@@ -34,7 +34,6 @@ void my_swap(struct student *a, struct student *b) {
 	memcpy(b, &c, sizeof(struct student));
 }
 
-/* Copy data from src to dst */
 void my_copy(struct student *src, struct student *dst) {
 	counter_copy++;
 	memcpy(dst, src, sizeof(struct student));
@@ -42,18 +41,15 @@ void my_copy(struct student *src, struct student *dst) {
 
 void count_func(int size) {
 	int i, key;
-	int count[501]; /* Score ranges from 0 to 500 (501 key values) */
+	int count[501]; 
 	struct student *work;
 	if ((work = malloc(sizeof(struct student) * size)) == NULL) {
 		printf("Cannot allocate memory \n"); exit(1);
 	}
-	/* Clear counter */
 	for (i = 0; i <= 500; i++) count[i] = 0;
-	/* Frequency distribution */
 	for (i = 0; i < size; i++) {
 		key = (int)table[i].score; count[key]++;
 	}
-	/* Cumlative frequency distribution */
 	for (i = 0; i < 500; i++)
 		count[i + 1] += count[i];
 	for (i = size - 1; i >= 0; i--) {
@@ -80,7 +76,6 @@ void Count(int size) {
 void heap_func(int left, int right) {
 	struct student root;
 	int child, parent;
-	/* The element which goes down the heap */
 	my_copy(&table[left], &root);
 	for (parent = left; parent < (right + 1) / 2; parent = child) {
 		int r, l;
@@ -102,9 +97,7 @@ void Heap(int size) {
 	gettimeofday(&stime, NULL);
 	int i;
 	for (i = size / 2 - 1; i >= 0; i--)
-		/* Heap is created for all subtrees */
 		heap_func(i, size - 1);
-	/* Heap sort is performed for table[0] to table[i-1] */
 	for (i = size - 1; i > 0; i--) {
 		my_swap(&table[0], &table[i]);
 		heap_func(0, i- 1);
@@ -119,24 +112,18 @@ void merge_func(int left, int right, struct student *work) {
 	int center, i, j, num, base;
 	if (left >= right) return;
 	center = (left + right) / 2;
-	/* Call merge_func() to sort the first half */
 	merge_func(left, center, work);
-	/* Call merge_func() to sort the last  half */
 	merge_func(center + 1, right, work);
 	num = 0;
 	for (i = left; i <= center; i++)
 		my_copy(&table[i], &work[num++]);
 	j = 0; base = left;
 	while (i <= right && j < num)
-		/* If work[j] is larger than table[i] */
 		if (my_compare(&work[j], &table[i]) == 1)
-			/* Copy table[i++] to table[base++] */
 			my_copy(&table[i++], &table[base++]);
 		else
-			/* Copy work[j++] to table[base++] */
 			my_copy(&work[j++], &table[base++]);
 	while (j < num)
-		/* Copy work[j++] to table[base++] */
 		my_copy(&work[j++], &table[base++]);
 }
 
@@ -200,15 +187,12 @@ int main(int argc, char *argv[]) {
 	if ((fp = fopen(argv[1], "r")) == NULL) {
 		printf("Cannot open file (%s) \n", argv[1]); exit(1);
 	}
-	/* Read the file to count the number of lines in the file */
 	n = 0;
 	while (fgets(buf, BUF_SIZE, fp) != NULL)
 		n++;
-	/* Memory allocation */
 	if ((table = malloc(sizeof(struct student) * n)) == NULL) {
 		printf("Cannot allocate memory \n"); exit(1);
 	}
-	/* Read the file again to copy the data */
 	n = 0;
 	fseek(fp, 0L, SEEK_SET);
 	while (fgets(buf, BUF_SIZE, fp) != NULL) {
@@ -217,17 +201,15 @@ int main(int argc, char *argv[]) {
 	}
 	fclose(fp);
 
-//    Disp(n);
+//  Disp(n);
     Clear();
 
-    // 7. ★修正：Count(n) から Quick(n) に変更（小数に対応）
+   
     Count(n);
 
-    // 8. ソート後の表示
-//    Disp(n);
+//  Disp(n);
     Counter();
 
-    // 9. メモリ解放して終了
     free(table);
 	return 0;
 }
