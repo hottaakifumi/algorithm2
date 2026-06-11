@@ -39,8 +39,6 @@ void my_swap(struct student *a, struct student *b) {
     memcpy(b, &c, sizeof(struct student));
 }
 
-// --- ソートロジックは変更なし ---
-
 void Bubble(int size) {
     struct timeval stime, etime;
     double sec;
